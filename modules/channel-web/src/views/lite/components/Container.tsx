@@ -37,9 +37,11 @@ class Container extends React.Component<ContainerProps> {
           })}
         >
           <MessageList />
-          <Keyboard.Default>
-            <OverridableComponent name={'composer'} original={Composer} />
-          </Keyboard.Default>
+          <div className={'body-content-type-wrapper'}>
+            <Keyboard.Default>
+              <OverridableComponent name={'composer'} original={Composer} />
+            </Keyboard.Default>
+          </div>
         </div>
       )
     }

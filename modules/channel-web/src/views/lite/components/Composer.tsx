@@ -161,7 +161,6 @@ class Composer extends React.Component<ComposerProps, { isRecording: boolean }> 
               onChange={this.handleMessageChanged}
               value={this.props.message}
               onKeyPress={this.handleKeyPress}
-              onKeyDown={this.handleKeyDown}
               aria-label={this.props.intl.formatMessage({
                 id: 'composer.message',
                 defaultMessage: 'Message to send'
