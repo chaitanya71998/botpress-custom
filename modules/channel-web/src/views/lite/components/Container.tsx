@@ -54,11 +54,10 @@ class Container extends React.Component<ContainerProps> {
     return (
       <React.Fragment>
         <OverridableComponent name={'before_container'} original={null} />
-        <div className={classNames} style={{ width: this.props.dimensions.layout }}>
+        <div className={classNames}>
           <Header />
           {this.renderBody()}
           <OverridableComponent name={'below_conversation'} original={null} />
-          {this.props.isPoweredByDisplayed && <Footer />}
         </div>
       </React.Fragment>
     )

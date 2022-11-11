@@ -6,6 +6,9 @@ import confirmDialog from '../../../../../../packages/ui-shared-lite/ConfirmDial
 import MoreOptions from '../../../../../../packages/ui-shared-lite/MoreOptions'
 import Close from '../icons/Close'
 import Delete from '../icons/Delete'
+import BottomArrow from '../icons/BottomArrow'
+import HandWave from '../icons/HandWave'
+
 import Download from '../icons/Download'
 import Information from '../icons/Information'
 import List from '../icons/List'
@@ -56,6 +59,18 @@ class Header extends React.Component<HeaderProps> {
       this.onBlur()
       this.props.focusNext()
     }
+  }
+
+  renderLPBotHeader = () => {
+    return (
+      <>
+        <div className={'bpw-header-title'}>Hi there {<HandWave />}</div>
+        <div className={'bpw-header-subtitle'}>We value your ideas, requests or comments.</div>
+        <div className={'bpw-header-description'}>
+          Please fill the following form so that we can ensure a top quality experience to all of our CCBPians.
+        </div>
+      </>
+    )
   }
 
   renderTitle = () => {
@@ -240,7 +255,7 @@ class Header extends React.Component<HeaderProps> {
         onKeyDown={this.handleKeyDown.bind(this, this.props.hideChat)}
         onBlur={this.onBlur}
       >
-        <Close />
+        {this.props.isEmulator ? <Close /> : <BottomArrow />}
       </button>
     )
   }
@@ -289,65 +304,78 @@ class Header extends React.Component<HeaderProps> {
   }
 
   render() {
-    const optionsItems = []
-
-    if (this.props.showDownloadButton) {
-      optionsItems.push({
-        label: 'Download Conversation',
-        action: this.props.downloadConversation
-      })
-    }
-
-    if (this.props.showConversationsButton) {
-      optionsItems.push({
-        label: 'Toggle List View',
-        action: this.props.toggleConversations
-      })
-    }
-
-    if (this.props.showBotInfoButton) {
-      optionsItems.push({
-        label: 'Toggle Bot Info',
-        action: this.props.toggleBotInfo
-      })
-    }
-
-    if (this.props.showDeleteConversationButton) {
-      optionsItems.push({
-        label: 'Delete conversation',
-        action: this.props.deleteConversation
-      })
-    }
-
-    if (this.props.isEmulator) {
+    if (!this.props.isEmulator) {
       return (
-        <div className="bpw-emulator-header">
-          <span className="bpw-emulator-header-tab">Emulator</span>
-          <div>
-            <span className="bpw-emulator-buttons">{this.props.showResetButton && this.renderResetButton()}</span>
-            <MoreOptions show={this.state.showingOption} onToggle={this.setShowingOption} items={optionsItems} />
+        <div className={'bpw-header-container'}>
+          <div className={'bpw-header-title-flexbox'}>
+            <div className={'bpw-header-title-container'}>
+              {this.renderLPBotHeader()}
+              {this.renderCloseButton()}
+            </div>
           </div>
         </div>
       )
-    }
+    } else {
+      const optionsItems = []
 
-    return (
-      <div className={'bpw-header-container'}>
-        <div className={'bpw-header-title-flexbox'}>
-          <div className={'bpw-header-title-container'}>
-            <Avatar name={this.props.botName} avatarUrl={this.props.botAvatarUrl} height={40} width={40} />
-            {this.renderTitle()}
+      if (this.props.showDownloadButton) {
+        optionsItems.push({
+          label: 'Download Conversation',
+          action: this.props.downloadConversation
+        })
+      }
+
+      if (this.props.showConversationsButton) {
+        optionsItems.push({
+          label: 'Toggle List View',
+          action: this.props.toggleConversations
+        })
+      }
+
+      if (this.props.showBotInfoButton) {
+        optionsItems.push({
+          label: 'Toggle Bot Info',
+          action: this.props.toggleBotInfo
+        })
+      }
+
+      if (this.props.showDeleteConversationButton) {
+        optionsItems.push({
+          label: 'Delete conversation',
+          action: this.props.deleteConversation
+        })
+      }
+
+      if (this.props.isEmulator) {
+        return (
+          <div className="bpw-emulator-header">
+            <span className="bpw-emulator-header-tab">Emulator</span>
+            <div>
+              <span className="bpw-emulator-buttons">{this.props.showResetButton && this.renderResetButton()}</span>
+              <MoreOptions show={this.state.showingOption} onToggle={this.setShowingOption} items={optionsItems} />
+            </div>
           </div>
+        )
+      }
+
+      return (
+        <div className={'bpw-header-container'}>
+          <div className={'bpw-header-title-flexbox'}>
+            <div className={'bpw-header-title-container'}>
+              <Avatar name={this.props.botName} avatarUrl={this.props.botAvatarUrl} height={40} width={40} />
+              {this.renderTitle()}
+            </div>
+          </div>
+          {!!this.props.customButtons.length && this.renderCustomButtons()}
+          {this.props.showDeleteConversationButton && this.renderDeleteConversationButton()}
+          {this.props.showResetButton && this.renderResetButton()}
+          {this.props.showDownloadButton && this.renderDownloadButton()}
+          {this.props.showConversationsButton && this.renderConvoButton()}
+          {this.props.showBotInfoButton && this.renderBotInfoButton()}
+          {this.props.showCloseButton && this.renderCloseButton()}
         </div>
-        {!!this.props.customButtons.length && this.renderCustomButtons()}
-        {this.props.showDeleteConversationButton && this.renderDeleteConversationButton()}
-        {this.props.showResetButton && this.renderResetButton()}
-        {this.props.showDownloadButton && this.renderDownloadButton()}
-        {this.props.showConversationsButton && this.renderConvoButton()}
-        {this.props.showBotInfoButton && this.renderBotInfoButton()}
-        {this.props.showCloseButton && this.renderCloseButton()}
-      </div>
-    )
+      )
+    }
   }
 }
 

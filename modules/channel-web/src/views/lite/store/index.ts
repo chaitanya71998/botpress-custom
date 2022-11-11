@@ -292,7 +292,7 @@ class RootStore {
       return this.sendData({ type: 'text', text: message })
     }
 
-    const userMessage = this.composer.message
+    const userMessage = this.composer.message?.trim()
     if (!userMessage || !userMessage.length) {
       return
     }
