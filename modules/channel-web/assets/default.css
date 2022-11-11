@@ -728,6 +728,15 @@ body {
   border-radius: 6px;
   padding: 6px 11.5px;
 }
+.composer-send:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.body-content-type-wrapper {
+  max-height: 186px;
+  overflow-y: auto;
+}
 
 /* .bpw-send-button:hover,
 .bpw-send-button:focus {
