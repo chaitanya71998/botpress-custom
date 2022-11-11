@@ -169,10 +169,10 @@ const Content = observer(props => {
 
           return (
             <div key={i}>
-              {isDateNeeded && renderDate(group[0].sentOn)}
+              {/* {isDateNeeded && renderDate(group[0].sentOn)} */}
               <MessageGroup
                 isBot={!authorId}
-                avatar={avatar}
+                avatar={<></>}
                 userName={payload.channel?.web?.userName}
                 key={`msg-group-${i}`}
                 isLastGroup={i >= groups.length - 1}

@@ -81,9 +81,9 @@ class MessageGroup extends React.Component<Props> {
           'bpw-from-bot': isBot
         })}
       >
-        {avatar}
+        {/* {avatar} */}
         <div role="region" className={'bpw-message-container'}>
-          {showUserName && <div className={'bpw-message-username'}>{userName}</div>}
+          {/* {showUserName && <div className={'bpw-message-username'}>{userName}</div>} */}
           <div aria-live="assertive" role="log" className={'bpw-message-group'}>
             <span data-from={fromLabel} className="from hidden" aria-hidden="true">
               {fromLabel}

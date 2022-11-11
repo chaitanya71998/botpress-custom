@@ -47,10 +47,10 @@ class Composer extends React.Component<ComposerProps, { isRecording: boolean }> 
       await this.props.sendMessage()
       return
     }
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      await this.props.sendMessage()
-    }
+    // if (e.key === 'Enter') {
+    //   e.preventDefault()
+    //   await this.props.sendMessage()
+    // }
   }
 
   handleKeyDown = e => {
@@ -73,10 +73,10 @@ class Composer extends React.Component<ComposerProps, { isRecording: boolean }> 
 
   handleMessageChanged = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { updateMessage, composerMaxTextLength } = this.props
-
-    const msg = e.target.value.slice(0, composerMaxTextLength)
+    const msg = e.target.value
 
     updateMessage(msg)
+    this.textAreaAdjust(e.target)
   }
 
   isLastMessageFromBot = (): boolean => {
@@ -99,8 +99,39 @@ class Composer extends React.Component<ComposerProps, { isRecording: boolean }> 
     )
   }
 
+  renderSend = () => {
+    return (
+      <div className={'bpw-send-buttons'}>
+        <button
+          className={'bpw-send-button composer-send'}
+          disabled={!this.props.message?.trim().length || this.props.composerLocked || this.state.isRecording}
+          onClick={this.props.sendMessage.bind(this, undefined)}
+          aria-label={this.props.intl.formatMessage({
+            id: 'composer.send',
+            defaultMessage: 'Send'
+          })}
+          id="btn-send"
+        >
+          <FormattedMessage id={'composer.send'} />
+        </button>
+        {this.props.enableVoiceComposer && (
+          <VoiceRecorder
+            onStart={this.onVoiceStart}
+            onDone={this.onVoiceEnd}
+            onNotAvailable={this.onVoiceNotAvailable}
+          />
+        )}
+      </div>
+    )
+  }
+
+  textAreaAdjust(element) {
+    element.style.height = '1px'
+    element.style.height = 25 + element.scrollHeight + 'px'
+  }
+
   render() {
-    if (this.props.composerHidden) {
+    if (this.props.composerHidden || this.props.composerLocked) {
       return null
     }
 
@@ -140,43 +171,7 @@ class Composer extends React.Component<ComposerProps, { isRecording: boolean }> 
             <label htmlFor="input-message" style={{ display: 'none' }}>
               {placeholder}
             </label>
-          </div>
-
-          <div className={'bpw-send-buttons'}>
-            <ToolTip
-              childId="btn-send"
-              content={
-                this.props.isEmulator
-                  ? this.props.intl.formatMessage({
-                      id: 'composer.interact',
-                      defaultMessage: 'Interact with your chatbot'
-                    })
-                  : this.props.intl.formatMessage({
-                      id: 'composer.sendMessage',
-                      defaultMessage: 'Send Message'
-                    })
-              }
-            >
-              <button
-                className={'bpw-send-button'}
-                disabled={!this.props.message.length || this.props.composerLocked || this.state.isRecording}
-                onClick={this.props.sendMessage.bind(this, undefined)}
-                aria-label={this.props.intl.formatMessage({
-                  id: 'composer.send',
-                  defaultMessage: 'Send'
-                })}
-                id="btn-send"
-              >
-                <FormattedMessage id={'composer.send'} />
-              </button>
-            </ToolTip>
-            {this.props.enableVoiceComposer && (
-              <VoiceRecorder
-                onStart={this.onVoiceStart}
-                onDone={this.onVoiceEnd}
-                onNotAvailable={this.onVoiceNotAvailable}
-              />
-            )}
+            {this.renderSend()}
           </div>
         </div>
       </div>
