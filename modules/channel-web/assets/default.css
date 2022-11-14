@@ -88,6 +88,12 @@ body {
   color: #000000;
 }
 
+@media all and (max-width: 425px) {
+  .bpw-chat-container {
+    width: 100% !important;
+  }
+}
+
 .bpw-layout {
   position: fixed;
   bottom: 0;
@@ -132,6 +138,9 @@ body {
   border: 1px solid #0c8ae9;
   border-radius: 20px;
   color: #475569;
+  min-width: 91px;
+  padding: 5px 20px;
+  line-height: 16px;
 }
 
 .bpw-file-button {

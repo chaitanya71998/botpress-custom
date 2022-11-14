@@ -64,11 +64,12 @@ class Header extends React.Component<HeaderProps> {
   renderLPBotHeader = () => {
     return (
       <>
-        <div className={'bpw-header-title'}>Hi there {<HandWave />}</div>
-        <div className={'bpw-header-subtitle'}>We value your ideas, requests or comments.</div>
-        <div className={'bpw-header-description'}>
-          Please fill the following form so that we can ensure a top quality experience to all of our CCBPians.
+        <div className={'bpw-header-title'}>
+          {this.props.intl.formatMessage({ id: 'header.title' })}
+          {<HandWave />}
         </div>
+        <div className={'bpw-header-subtitle'}>{this.props.intl.formatMessage({ id: 'header.subTitle' })}</div>
+        <div className={'bpw-header-description'}>{this.props.intl.formatMessage({ id: 'header.description' })}</div>
       </>
     )
   }
