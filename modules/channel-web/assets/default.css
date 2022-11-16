@@ -108,6 +108,7 @@ body {
   display: flex;
   background: #ffffff;
   border-radius: 16px;
+  max-height: 100%;
 }
 
 .bpw-layout-fullscreen {
@@ -1181,6 +1182,14 @@ body {
 
 .bpw-rtl .bpw-keyboard-quick_reply-dropdown {
   direction: rtl;
+}
+
+@media all and (max-width: 425px) {
+  .bpw-chat-container {
+    width: 100% !important;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
 }
 
 ::-webkit-scrollbar {
